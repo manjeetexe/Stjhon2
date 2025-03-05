@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 
 
+
 const Home = () => {
   const [sidebarWidth, setSidebarWidth] = useState(100);
   const [middleWidth, setMiddleWidth] = useState(600);
@@ -23,110 +24,21 @@ const Home = () => {
   const minMiddleWidth = 650;
   const maxMiddleWidth = 950;
 
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const chatRef = useRef(null);
 
-  const sendMessage = async () => {
-    if (input.trim() === "") return;
-  
-    // Add user message to chat immediately
-    const newMessage = { id: messages.length + 1, text: input, sender: "user" };
-    setMessages([...messages, newMessage]);
-    setInput("");
-  
-    try {
-      // Send user message to backend
-      const response = await fetch("http://localhost:8000/ask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: input }),
-      });
-    
-      console.log("Response Status:", response.status);
-    
-      if (!response.ok) {
-        throw new Error(`Server Error: ${response.status}`);
-      }
-    
-      const data = await response.json();
-      console.log("Response Data:", data);
-    
-      if (!data.response) {
-        throw new Error("Invalid response from server.");
-      }
-    
-      let botReply = (
-        <div>
-          {/* If response is a string, just display it */}
-          {typeof data.response === "string" ? (
-            <p className="text-lg font-semibold">{data.response}</p>
-          ) : (
-            // If response is an object, display structured content
-            <div>
-              {data.response.context && (
-                <div>
-                  <h1 className="text-xl font-bold text-blue-600">📝 Context:</h1>
-                  <p className="text-lg">{data.response.context}</p>
-                </div>
-              )}
-    
-              {data.response.relevant_laws?.length > 0 && (
-                <div>
-                  <h1 className="text-xl font-bold text-green-600">📜 Relevant Laws:</h1>
-                  <ul className="list-disc pl-5">
-                    {data.response.relevant_laws.map((law, index) => (
-                      <li key={index} className="text-lg">{law}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-    
-              {data.response.step_by_step_guidance?.length > 0 && (
-                <div>
-                  <h1 className="text-xl font-bold text-purple-600">📌 Step-by-Step Guidance:</h1>
-                  <ul className="list-decimal pl-5">
-                    {data.response.step_by_step_guidance.map((step, index) => (
-                      <li key={index} className="text-lg font-medium mt-2">Step {index + 1}: {step}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-    
-              {data.response.final_advice && (
-                <div>
-                  <h1 className="text-xl font-bold text-red-600">💡 Final Advice:</h1>
-                  <p className="text-lg">{data.response.final_advice}</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      );
-    
-      // Add bot response to chat
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 2, text: botReply, sender: "bot" },
-      ]);
-    } catch (error) {
-      console.error("Error sending message:", error.message);
-    
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 2, text: <p className="text-red-600">⚠️ Error connecting to server.</p>, sender: "bot" },
-      ]);
-    }
+  const user = {
+    name: "John Doe",
+    email: "johndoe@example.com",
+    phone: "+1 123 456 7890",
+    address: "123 Main Street, City, Country",
+    bio: "Software Developer | Tech Enthusiast | Lifelong Learner",
+    profileImage: "https://via.placeholder.com/150", // Replace with actual user image
   };
 
+
+  
+
   // Auto-scroll to latest message
-  useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
+ 
 
   // Mouse events for resizing
   useEffect(() => {
@@ -235,45 +147,14 @@ const Home = () => {
       {/* Main Chat Section */}
       <div className="h-screen w-full flex flex-col bg-gray-100">
       {/* Header */}
-      <div className="  text-black text-lg font-semibold py-6 px-20  flex items-center justify-between ">
-        <h1 className="text-2xl text-black  font-medium">Nexido</h1>
-        <IoSettings className="size-6"/>
+      <div className="  text-black text-lg font-semibold py-6 px-10  flex items-center justify-between ">
+        <h1 className="text-4xl text-black  font-medium">Profile</h1>
+        <IoSettings className="size-8"/>
         
       </div>
 
-      {/* Chat Messages */}
-      <div ref={chatRef} className="flex flex-col gap-2 flex-grow overflow-y-auto px-20 p-4">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`p-3 max-w-[75%] text-white text-sm shadow-md backdrop-blur-lg ${
-              msg.sender === "user"
-                ? "bg-black self-end rounded-2xl rounded-br-2xl rounded-bl-2xl"
-                : "bg-black self-start rounded-2xl rounded-bl-2xl rounded-br-2xl"
-            }`}
-          >
-            {msg.text}
-          </div>
-        ))}
-      </div>
-
-      {/* Input Section */}
-      <div className="flex items-center p-4 px-20 bg-gray-100 shadow-md sticky bottom-0">
-      <input
-          className="flex-grow p-3 px-8 rounded-full border text-black bg-white border-gray-300 focus:outline-none focus:ring-[1px] focus:ring-black shadow-md"
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          placeholder="Type your message..."
-        />
-        <button
-          className="ml-3 bg-black text-white p-4 rounded-full shadow-lg transition transform hover:scale-110"
-          onClick={sendMessage}
-        >
-          <FaPaperPlane />
-        </button>
-      </div>
+      
+      
     </div>
     </div>
   );

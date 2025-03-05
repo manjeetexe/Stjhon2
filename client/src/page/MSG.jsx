@@ -209,7 +209,7 @@ const Home = () => {
           <h1>Connect to  Advocate</h1>
         </button>
 
-        <h1 className="text-xl mt-10">History</h1>
+        <h1 className="text-xl mt-10">Messages</h1>
 
         <div className="w-full mt-10 h-90 rounded-2xl bg-white">
 
