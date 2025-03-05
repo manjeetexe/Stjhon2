@@ -5,6 +5,8 @@ import Home from './page/Home';
 import Profile from './page/profile'
 import MSG from './page/MSG'
 import Search from './page/Search'
+import UserLogin from './page/userLogin'
+import UserSignup from './page/userSignup'
 const App = () => {
   return (
     <>
@@ -16,6 +18,8 @@ const App = () => {
             <Route path="/userprofile" element={<Profile />} />
             <Route path="/msg" element={<MSG />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/userlogin" element={<UserLogin />} />
+            <Route path="/usersignup" element={<UserSignup />} />
           </Routes>
         </Router>
     </>
