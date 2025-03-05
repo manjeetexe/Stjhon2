@@ -200,14 +200,20 @@ const Home = () => {
 
         <h1 className="text-3xl">Chat</h1>
 
-        <button className="text-white bg-black text-lg flex w-full mt-10 justify-center items-center rounded-lg  py-2 px-10 ">
+        <button
+          className="text-white bg-black text-lg flex w-full mt-10 justify-center items-center rounded-lg py-2 px-10"
+          onClick={() => {
+            setMessages([]);  // Clears chat messages
+            setInput("");     // Clears input field
+          }}
+        >
           <h1>New Chat</h1>
         </button>
 
 
-        <button className="text-white bg-black text-lg flex w-full mt-2 justify-center items-center rounded-lg  py-2 px-10 ">
+        <Link to='/search' className="text-white bg-black text-lg flex w-full mt-2 justify-center items-center rounded-lg  py-2 px-10 ">
           <h1>Connect to  Advocate</h1>
-        </button>
+        </Link>
 
         <h1 className="text-xl mt-10">History</h1>
 

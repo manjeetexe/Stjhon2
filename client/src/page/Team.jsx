@@ -14,7 +14,7 @@ const Team = () => {
         <section className='h-screen bg-screen overflow-hidden '>
                 <nav className='h-20 w-screen flex justify-between items-center px-20 bg-white'>
 
-                    <div className='text-5xl font-medium text-blue-600'>
+                    <div className='text-5xl font-medium text-black'>
                         <h1>Nexido</h1>
                     </div>
 
@@ -22,7 +22,7 @@ const Team = () => {
                         <h1>Feature</h1>
                         <h1>Team</h1>
                         <h1>Contacts</h1>
-                        <Link to='/home' className='px-5 flex items-center gap-2  py-2 text-white rounded-md bg-blue-600'>
+                        <Link to='/home' className='px-5 flex items-center gap-2  py-2 text-white rounded-md bg-black'>
                             <h1>Get Started </h1>
                             <FaArrowRight />
                         </Link>
@@ -30,11 +30,11 @@ const Team = () => {
 
                 </nav>
 
-                <main className=' bg-white flex w-full h-full '>
+                <main className=' bg-white mt-10 flex w-full h-full '>
 
                    <div className='w-1/2 pl-20 py-10 '>
 
-                        <div className='bg-blue-300 rounded-2xl px-5 py-1 text-lg flex justify-center items-center w-40'>Powered by AI</div>
+                        <div className='bg-black/40 rounded-2xl px-5 py-1 text-lg flex justify-center items-center w-40'>Powered by AI</div>
                         <h1 className='text-8xl pt-15 text-black font-medium  leading-20 '>Transform Your
                         Social Media Strategy</h1>
 
@@ -44,14 +44,14 @@ const Team = () => {
 
 
                         <div className='flex gap-5 mt-10  text-white'>
-                            <Link to='/home' className='bg-blue-500 text-xl flex gap-2 items-center px-7 py-4 rounded-lg'>
+                            <Link to='/home' className='bg-black text-xl flex gap-2 items-center px-7 py-4 rounded-lg'>
                                     <div className=''>
                                         Get Started
                                     </div>
                                     <FaArrowRight />
                             </Link>
 
-                            <div className='text-blue-600 border gap-2 border-gray-300  text-xl flex items-center px-7 py-4 rounded-lg'>
+                            <div className='text-black border gap-2 border-gray-300  text-xl flex items-center px-7 py-4 rounded-lg'>
                                     <div className=''>
                                         View Demo
                                     </div>
@@ -66,7 +66,7 @@ const Team = () => {
                    <div className='w-1/2 flex justify-center px-16 items-center'>
 
 
-                    <div className='w-full h-100 mb-26 rounded-lg bg-blue-500'>
+                    <div className='w-full h-100 mb-26 rounded-lg bg-black'>
 
 
                     </div>
@@ -112,7 +112,7 @@ const Team = () => {
 
             <div className='flex mt-10 justify-center items-center  flex-wrap gap-5 px-20'>
                 <div className='h-70 p-6 rounded-lg w-100 border-2  border-gray-300 '>
-                    <div className='p-3 bg-blue-300 w-14 rounded-lg  text-blue-600'>
+                    <div className='p-3 bg-black/40 text-black w-14 rounded-lg  '>
                         <HiOutlineLightningBolt className='text-3xl'/>
                     </div>
                     <h1 className='text-2xl font-bold pt-5'>Smart Automation</h1>
@@ -120,7 +120,7 @@ const Team = () => {
 
                 </div>
                 <div className='h-70 p-6 rounded-lg w-100 border-2  border-gray-300 '>
-                    <div className='p-3 bg-blue-300 w-14 rounded-lg  text-blue-600'>
+                    <div className='p-3 bg-black/40 text-black w-14 rounded-lg '>
                         <HiOutlineLightningBolt className='text-3xl'/>
                     </div>
                     <h1 className='text-2xl font-bold pt-5'>Smart Automation</h1>
@@ -128,7 +128,7 @@ const Team = () => {
 
                 </div>
                 <div className='h-70 p-6 rounded-lg w-100 border-2  border-gray-300 '>
-                    <div className='p-3 bg-blue-300 w-14 rounded-lg  text-blue-600'>
+                    <div className='p-3 bg-black/40 text-black w-14 rounded-lg  '>
                         <HiOutlineLightningBolt className='text-3xl'/>
                     </div>
                     <h1 className='text-2xl font-bold pt-5'>Smart Automation</h1>
@@ -136,7 +136,7 @@ const Team = () => {
 
                 </div>
                 <div className='h-70 p-6 rounded-lg w-100 border-2  border-gray-300 '>
-                    <div className='p-3 bg-blue-300 w-14 rounded-lg  text-blue-600'>
+                    <div className='p-3 bg-black/40 text-black w-14 rounded-lg  '>
                         <HiOutlineLightningBolt className='text-3xl'/>
                     </div>
                     <h1 className='text-2xl font-bold pt-5'>Smart Automation</h1>
@@ -144,7 +144,7 @@ const Team = () => {
 
                 </div>
                 <div className='h-70 p-6 rounded-lg w-100 border-2  border-gray-300 '>
-                    <div className='p-3 bg-blue-300 w-14 rounded-lg  text-blue-600'>
+                    <div className='p-3 bg-black/40 text-black w-14 rounded-lg  '>
                         <HiOutlineLightningBolt className='text-3xl'/>
                     </div>
                     <h1 className='text-2xl font-bold pt-5'>Smart Automation</h1>
@@ -152,7 +152,7 @@ const Team = () => {
 
                 </div>
                 <div className='h-70 p-6 rounded-lg w-100 border-2  border-gray-300 '>
-                    <div className='p-3 bg-blue-300 w-14 rounded-lg  text-blue-600'>
+                    <div className='p-3 bg-black/40 text-black w-14 rounded-lg  '>
                         <HiOutlineLightningBolt className='text-3xl'/>
                     </div>
                     <h1 className='text-2xl font-bold pt-5'>Smart Automation</h1>
@@ -172,25 +172,25 @@ const Team = () => {
             <div className='flex mt-10 justify-center items-center  flex-wrap gap-5 px-10'>
             <div className='h-60 text-xl  flex flex-col justify-center items-center gap-3 font-bold rounded-lg w-80 border-2 border-gray-300 '>
                     <h1>Chahat Kesharwani</h1>
-                    <h1 className='text-blue-700'>Designer & Developer</h1>
+                    <h1 className='text-black/50'>Designer & Developer</h1>
                     <h1 className='text-base'>NIT Jalandhar (2027)</h1>
 
                 </div>
                 <div className='h-60 text-xl  flex flex-col justify-center items-center gap-3 font-bold rounded-lg w-80 border-2 border-gray-300 '>
                     <h1>Chahat Kesharwani</h1>
-                    <h1 className='text-blue-700'>Designer & Developer</h1>
+                    <h1 className='text-black/50'>Designer & Developer</h1>
                     <h1 className='text-base'>NIT Jalandhar (2027)</h1>
 
                 </div>
                 <div className='h-60 text-xl  flex flex-col justify-center items-center gap-3 font-bold rounded-lg w-80 border-2 border-gray-300 '>
                     <h1>Chahat Kesharwani</h1>
-                    <h1 className='text-blue-700'>Designer & Developer</h1>
+                    <h1 className='text-black/50'>Designer & Developer</h1>
                     <h1 className='text-base'>NIT Jalandhar (2027)</h1>
 
                 </div>
                 <div className='h-60 text-xl  flex flex-col justify-center items-center gap-3 font-bold rounded-lg w-80 border-2 border-gray-300 '>
                     <h1>Chahat Kesharwani</h1>
-                    <h1 className='text-blue-700'>Designer & Developer</h1>
+                    <h1 className='text-black/50'>Designer & Developer</h1>
                     <h1 className='text-base'>NIT Jalandhar (2027)</h1>
 
                 </div>
