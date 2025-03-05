@@ -9,6 +9,7 @@ import { MdMessage } from "react-icons/md";
 import { RiGlobalFill } from "react-icons/ri";
 import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Advocate from './../Components/Advocate'
 
 
 
@@ -209,9 +210,9 @@ const Home = () => {
           <h1>Connect to  Advocate</h1>
         </button>
 
-        <h1 className="text-xl mt-10">History</h1>
+        <h1 className="text-xl mt-10">Favroute</h1>
 
-        <div className="w-full mt-10 h-90 rounded-2xl bg-white">
+        <div className="w-full mt-5 h-90 rounded-2xl bg-white">
 
         </div>
 
@@ -235,45 +236,38 @@ const Home = () => {
       {/* Main Chat Section */}
       <div className="h-screen w-full flex flex-col bg-gray-100">
       {/* Header */}
-      <div className="  text-black text-lg font-semibold py-6 px-20  flex items-center justify-between ">
-        <h1 className="text-2xl text-black  font-medium">Nexido</h1>
-        <IoSettings className="size-6"/>
+      <div className="  text-black text-lg font-semibold py-6 px-5  flex items-center justify-between ">
+        <h1 className="text-4xl text-black  font-medium">Recommender Advocates</h1>
+        <IoSettings className="size-8"/>
         
       </div>
 
       {/* Chat Messages */}
-      <div ref={chatRef} className="flex flex-col gap-2 flex-grow overflow-y-auto px-20 p-4">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`p-3 max-w-[75%] text-white text-sm shadow-md backdrop-blur-lg ${
-              msg.sender === "user"
-                ? "bg-black self-end rounded-2xl rounded-br-2xl rounded-bl-2xl"
-                : "bg-black self-start rounded-2xl rounded-bl-2xl rounded-br-2xl"
-            }`}
-          >
-            {msg.text}
-          </div>
-        ))}
+      <div className="grid grid-cols-3 px-5 h-screen overflow-y-auto pb-10 mt-5  gap-6">
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
+        <Advocate />
       </div>
 
       {/* Input Section */}
-      <div className="flex items-center p-4 px-20 bg-gray-100 shadow-md sticky bottom-0">
-      <input
-          className="flex-grow p-3 px-8 rounded-full border text-black bg-white border-gray-300 focus:outline-none focus:ring-[1px] focus:ring-black shadow-md"
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          placeholder="Type your message..."
-        />
-        <button
-          className="ml-3 bg-black text-white p-4 rounded-full shadow-lg transition transform hover:scale-110"
-          onClick={sendMessage}
-        >
-          <FaPaperPlane />
-        </button>
-      </div>
+      
     </div>
     </div>
   );
