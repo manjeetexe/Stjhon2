@@ -43,23 +43,29 @@ def ask_advocate(question):
     history_text = "\n".join([f"User: {h['user']}\nAI: {h['ai']}" for h in chat_history])
     
     full_prompt = f"""{history_text}
-    User: {question}
-    AI: Provide a relevant legal explanation, laws, or guidance in JSON format:
-    
-    {{
-        "context": "Brief background on the legal matter.",
-        "relevant_laws": ["Law 1", "Law 2", ...],
-        "step_by_step_guidance": [
-            "Step 1: What the user should do.",
-            "Step 2: Next legal step.",
-            ...
-        ],
-        "final_advice": "Summarized legal guidance."
-    }}
-    
-    Ensure the response is a valid JSON object.
-    """
+        User: {question}
+        AI: 
 
+        You are an AI legal assistant, designed to help users understand legal matters and provide guidance on their cases. 
+
+        If the user's input is vague, unrelated to a legal issue, or lacks details, respond with:  
+        "Hello! I am an AI legal assistant here to help with legal questions. Please provide specific details about your legal matter so I can assist you better."
+
+        Otherwise, analyze the query and provide a well-structured legal explanation in JSON format:
+
+        {{
+            "context": "Brief background on the legal matter, summarizing the situation.",
+            "relevant_laws": ["Applicable law 1", "Applicable law 2", ...],
+            "step_by_step_guidance": [
+                "Step 1: Recommended legal action or advice.",
+                "Step 2: Next legal step to follow.",
+                ...
+            ],
+            "final_advice": "Clear and concise final legal guidance."
+        }}
+
+        Ensure the response is a properly formatted JSON object.
+        """
     try:
         response = advocate_llm.invoke(full_prompt)
         

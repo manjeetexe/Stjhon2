@@ -37,26 +37,86 @@ const Home = () => {
   
     try {
       // Send user message to backend
-      const response = await fetch("http://localhost:5000/chat", {  // Replace with your API URL
+      const response = await fetch("http://localhost:8000/ask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ query: input }),
       });
-  
+    
+      console.log("Response Status:", response.status);
+    
+      if (!response.ok) {
+        throw new Error(`Server Error: ${response.status}`);
+      }
+    
       const data = await response.json();
-  
+      console.log("Response Data:", data);
+    
+      if (!data.response) {
+        throw new Error("Invalid response from server.");
+      }
+    
+      let botReply = (
+        <div>
+          {/* If response is a string, just display it */}
+          {typeof data.response === "string" ? (
+            <p className="text-lg font-semibold">{data.response}</p>
+          ) : (
+            // If response is an object, display structured content
+            <div>
+              {data.response.context && (
+                <div>
+                  <h1 className="text-xl font-bold text-blue-600">📝 Context:</h1>
+                  <p className="text-lg">{data.response.context}</p>
+                </div>
+              )}
+    
+              {data.response.relevant_laws?.length > 0 && (
+                <div>
+                  <h1 className="text-xl font-bold text-green-600">📜 Relevant Laws:</h1>
+                  <ul className="list-disc pl-5">
+                    {data.response.relevant_laws.map((law, index) => (
+                      <li key={index} className="text-lg">{law}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+    
+              {data.response.step_by_step_guidance?.length > 0 && (
+                <div>
+                  <h1 className="text-xl font-bold text-purple-600">📌 Step-by-Step Guidance:</h1>
+                  <ul className="list-decimal pl-5">
+                    {data.response.step_by_step_guidance.map((step, index) => (
+                      <li key={index} className="text-lg font-medium mt-2">Step {index + 1}: {step}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+    
+              {data.response.final_advice && (
+                <div>
+                  <h1 className="text-xl font-bold text-red-600">💡 Final Advice:</h1>
+                  <p className="text-lg">{data.response.final_advice}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    
       // Add bot response to chat
       setMessages((prev) => [
         ...prev,
-        { id: prev.length + 2, text: data.response, sender: "bot" },
+        { id: prev.length + 2, text: botReply, sender: "bot" },
       ]);
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error sending message:", error.message);
+    
       setMessages((prev) => [
         ...prev,
-        { id: prev.length + 2, text: "Error connecting to server.", sender: "bot" },
+        { id: prev.length + 2, text: <p className="text-red-600">⚠️ Error connecting to server.</p>, sender: "bot" },
       ]);
     }
   };
