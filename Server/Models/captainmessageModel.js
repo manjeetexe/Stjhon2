@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 
-const messageSchema = new mongoose.Schema({
+const captainMessageSchema = new mongoose.Schema({
     senderId :{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Captains',
@@ -22,6 +22,6 @@ const messageSchema = new mongoose.Schema({
 },
 {timestamps: true});
 
-const Message = mongoose.model("Message",messageSchema);
+const captainMessage = mongoose.model("captainMessage",captainMessageSchema);
 
-module.exports = Message
+module.exports = captainMessage

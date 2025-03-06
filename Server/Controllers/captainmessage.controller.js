@@ -1,15 +1,14 @@
-const captainModel = require('./../Models/captainModel')
 const userModel = require('./../Models/userModel')
 const mongoose = require('mongoose');
-const messageModel = require('./../Models/messageModel')
+const captainMessageModel = require('./../Models/captainmessageModel')
 
 module.exports.getuserforSidebar = async function (req, res, next) {
 
     try {
         
 
-        const filterCaptains = await captainModel.find()
-        res.status(200).json(filterCaptains)
+        const filterUsers = await userModel.find()
+        res.status(200).json(filterUsers)
 
 
     } catch (err) {
@@ -23,19 +22,19 @@ module.exports.getuserforSidebar = async function (req, res, next) {
 
 module.exports.getuserMessages = async function (req, res, next) {
     try {
-        const { captainChatid } = req.params;  
-        const userID = req.user._id;           
+        const { userChatId } = req.params;  
+        const captainID = req.captain._id;           
 
         
 
         // Convert captainChatid to ObjectId
-        const captainChatObjectId = new mongoose.Types.ObjectId(captainChatid);
+        const userChatObjectId = new mongoose.Types.ObjectId(userChatId);
 
         // Query with ObjectId comparison
-        const messages = await messageModel.find({
+        const messages = await captainMessageModel.find({
             $or: [
-                { senderId: userID, receiverId: captainChatObjectId },
-                { senderId: captainChatObjectId, receiverId: userID }
+                { senderId: captainID, receiverId: userChatId },
+                { senderId: userChatId, receiverId: captainID }
             ]
         }).sort({ createdAt: 1 });
 
@@ -54,8 +53,8 @@ module.exports.getuserMessages = async function (req, res, next) {
 module.exports.senduserMsg = async function (req, res) {
     try {
         const { text } = req.body;
-        const { captainChatid } = req.params;
-        const userID = req.user._id;
+        const { userChatId } = req.params;  
+        const captainID = req.captain._id;   
 
         
 
@@ -63,9 +62,9 @@ module.exports.senduserMsg = async function (req, res) {
             return res.status(400).json({ error: "Message cannot be empty" });
         }
 
-        const newMessage = new messageModel({
-            senderId: userID,
-            receiverId: captainChatid,
+        const newMessage = new captainMessageModel({
+            senderId: captainID,
+            receiverId: userChatId ,
             text,
         });
 

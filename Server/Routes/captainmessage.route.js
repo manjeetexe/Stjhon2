@@ -5,11 +5,11 @@ const messageCaptainController = require('./../Controllers/captainmessage.contro
 
 
 
-router.get('/captainmsg',authMiddleware.authUser ,messageCaptainController.getuserforSidebar)
+router.get('/captainmsg',authMiddleware.authCaptain ,messageCaptainController.getuserforSidebar)
 
-router.get('/:userChatid',authMiddleware.authUser ,messageCaptainController.getuserMessages)
+router.get('/:userChatId ',authMiddleware.authCaptain ,messageCaptainController.getuserMessages)
 
-router.post('/send/:userChatid',authMiddleware.authUser ,messageCaptainController.senduserMsg)
+router.post('/send/:userChatId ',authMiddleware.authCaptain ,messageCaptainController.senduserMsg)
 
 
 
