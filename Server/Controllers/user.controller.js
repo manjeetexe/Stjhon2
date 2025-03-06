@@ -115,7 +115,7 @@ module.exports.loginUser = async function (req, res, next) {
             maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
           });
 
-        console.log(token)
+        
         // Send response with token and user details
         return res.status(200).json({ token, user });
     } catch (error) {

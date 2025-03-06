@@ -7,7 +7,7 @@ module.exports.getcaptainsforSidebar = async function (req, res, next) {
     try {
         
 
-        const filterCaptains = await captainModel.findOne()
+        const filterCaptains = await captainModel.find()
         res.status(200).json(filterCaptains)
 
 
@@ -25,7 +25,9 @@ module.exports.getcaptainsMessages = async function (req, res, next) {
         const { captainChatid } = req.params;  
         const userID = req.user._id;           
 
-        
+        console.log(captainChatid)
+        console.log(userID)
+
         const messages = await messageModel.find({
             $or: [
                 { sender: userID, receiver: captainChatid },
@@ -44,34 +46,31 @@ module.exports.getcaptainsMessages = async function (req, res, next) {
 
 
 
-module.exports.sendCaptainMsg = async function (req, res, next) {
+
+
+module.exports.sendCaptainMsg = async function (req, res) {
     try {
-        const {text ,image} = req.body;
+        const { text } = req.body;
         const { captainChatid } = req.params;
         const userID = req.user._id;
 
-        let imgUrl;
-        if(image){
-            const UploadResponse = await cloudinary.upload(image);
-            imgUrl = UploadResponse.secure_url;
+        if (!text.trim()) {
+            return res.status(400).json({ error: "Message cannot be empty" });
         }
 
-        const newMesaage = new Mesaage({
-            senderId : userID,
-            receiverId : captainChatid,
+        const newMessage = new messageModel({
+            senderId: userID,
+            receiverId: captainChatid,
             text,
-            image: imgUrl
-        })
+        });
 
-        await newMesaage.save();
+        await newMessage.save();
 
-        // todo; sokectio code
+        // ✅ Socket.io can be added here for real-time messaging
 
-
-        res.status(201).json(newMesaage);
-        
+        res.status(201).json(newMessage);
     } catch (err) {
-        console.error('Error fetching messages:', err);
-        res.status(500).json({ error: 'Internal Server error' });
+        console.error("Error sending message:", err);
+        res.status(500).json({ error: "Internal Server error" });
     }
 };

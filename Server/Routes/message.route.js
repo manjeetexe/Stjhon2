@@ -7,7 +7,6 @@ const messageController = require('./../Controllers/message.controller')
 
 router.get('/usermsg',authMiddleware.authUser ,messageController.getcaptainsforSidebar)
 
-
 router.get('/:captainChatid',authMiddleware.authUser ,messageController.getcaptainsMessages)
 
 router.get('/send/:captainChatid',authMiddleware.authUser ,messageController.sendCaptainMsg)
