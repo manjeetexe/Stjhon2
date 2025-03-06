@@ -15,4 +15,4 @@ router.get('/send/:captainChatid',authMiddleware.authUser ,messageController.sen
 
 
 
-export default router;
+module.exports = router
