@@ -9,6 +9,9 @@ import UserLogin from './page/userLogin'
 import UserSignup from './page/userSignup'
 import AdvocateSignup from './page/AdvoSignup';
 import AdvocateLogin from './page/Advologin'
+import AdvocateSearch from './page/AdvocateSearch'
+import AdvocateMsg from './page/AdvocateMsg'
+import AdvocateProfile from './page/AdvocateProfile'
 
 
 const App = () => {
@@ -26,6 +29,10 @@ const App = () => {
             <Route path="/usersignup" element={<UserSignup />} />
             <Route path="/advocatesignup" element={<AdvocateSignup />} />
             <Route path="/advocatelogin" element={<AdvocateLogin />} />
+
+            <Route path="/advocateprofile" element={<AdvocateProfile />} />
+            <Route path="/advocatemsg" element={<AdvocateMsg />} />
+            <Route path="/advocatesearch" element={<AdvocateSearch />} />
 
           </Routes>
         </Router>
