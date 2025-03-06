@@ -1,34 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const Sidebar = () => {
-  const [data, setData] = useState(null); // State to store fetched data
+const Sidebar = ({ onUserSelect }) => {
+  const [data, setData] = useState([]); // Store captains list
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCaptains = async () => {
       try {
         const response = await fetch("http://localhost:4000/api/usermsg", {
           method: "GET",
-          credentials: "include", 
+          credentials: "include",
         });
-        
-        
-        // Replace with your API URL
+
         const result = await response.json();
-        console.log('Fetched Data:', result); // Console log the fetched data
-        setData(result); // Update state with fetched data
+        setData(Array.isArray(result) ? result : []); // Ensure result is an array
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching captains:", error);
       }
     };
 
-    fetchData(); // Call the function when the component mounts
+    fetchCaptains();
   }, []);
 
   return (
-    <div>
-      <h1 className='px-5'>Sidebar</h1>
-      <div className='border px-5 py-3'>
-        {data ? <h1>{data.name}</h1> : <h1>Loading...</h1>} {/* Render data if available */}
+    <div className="w-1/3 border-r">
+      <h1 className="px-5 pb-6 border-b">Captains</h1>
+      <div>
+        {data.length > 0 ? (
+          data.map((user) => (
+            <div
+              key={user._id}
+              onClick={() => onUserSelect(user._id)} // Pass selected user ID to parent
+              className="flex gap-2 px-5 py-2 border-b text-lg font-medium cursor-pointer hover:bg-gray-200"
+            >
+              <h1>{user.fullname.firstname}</h1>
+              <h1>{user.fullname.lastname}</h1>
+            </div>
+          ))
+        ) : (
+          <h1 className="px-5 py-2">Loading...</h1>
+        )}
       </div>
     </div>
   );
