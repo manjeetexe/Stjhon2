@@ -9,7 +9,7 @@ import { MdMessage } from "react-icons/md";
 import { RiGlobalFill } from "react-icons/ri";
 import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import Sidebar from "../Components/Siderbar";
+import AdvocateSidebar from "../Components/advocateSidebar";
 
 
 
@@ -35,11 +35,11 @@ const Home = () => {
   const [messages, setMessages] = useState([]); // Store messages
 
   // Fetch messages when a user is selected
-  const fetchMessages = async (captainChatId) => {
-    setSelectedUser(captainChatId); // Set selected captain
-
+  const fetchMessages = async (userChatId ) => {
+    setSelectedUser(userChatId ); // Set selected captain
+    console.log(userChatId)
     try {
-      const response = await fetch(`http://localhost:4000/api/${captainChatId}`, {
+      const response = await fetch(`http://localhost:4000/api/captain/${userChatId}`, {
         method: "GET",
         credentials: "include",
       });
@@ -59,7 +59,7 @@ const Home = () => {
     if (!input.trim() || !selectedUser) return;
   
     try {
-      const response = await fetch(`http://localhost:4000/api/send/${selectedUser}`, {
+      const response = await fetch(`http://localhost:4000/api/captain/send/${selectedUser}`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -156,7 +156,7 @@ const Home = () => {
       {/* Middle Section */}
       <div style={{ width: middleWidth }} className="h-screen py-6  bg-gray-100">
 
-      <Sidebar onUserSelect={fetchMessages} />
+      <AdvocateSidebar onUserSelect={fetchMessages} />
       </div>
 
       {/* Resizer (Middle Section -> Main Section) */}

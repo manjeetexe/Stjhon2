@@ -23,18 +23,20 @@ module.exports.getuserforSidebar = async function (req, res, next) {
 module.exports.getuserMessages = async function (req, res, next) {
     try {
         const { userChatId } = req.params;  
-        const captainID = req.captain._id;           
-
+        const captainID = req.captain; 
         
+        console.log(userChatId)
+        console.log(captainID)
 
+    
         // Convert captainChatid to ObjectId
         const userChatObjectId = new mongoose.Types.ObjectId(userChatId);
 
         // Query with ObjectId comparison
         const messages = await captainMessageModel.find({
             $or: [
-                { senderId: captainID, receiverId: userChatId },
-                { senderId: userChatId, receiverId: captainID }
+                { senderId: captainID, receiverId: userChatObjectId },
+                { senderId: userChatObjectId, receiverId: captainID }
             ]
         }).sort({ createdAt: 1 });
 
@@ -55,6 +57,10 @@ module.exports.senduserMsg = async function (req, res) {
         const { text } = req.body;
         const { userChatId } = req.params;  
         const captainID = req.captain._id;   
+
+        console.log(text)
+        console.log(userChatId)
+        console.log(captainID)
 
         
 
