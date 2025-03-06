@@ -127,11 +127,11 @@ const Home = () => {
         </div>
 
         <div className="flex flex-col gap-14">
-          <Link to='/search'><RiGlobalFill className="size-7"/></Link>
+          <Link to='/usersearch'><RiGlobalFill className="size-7"/></Link>
           <Link to='/userprofile'><IoPerson className="size-7"/></Link>
           <Link to='/home'><IoChatbubbleEllipsesSharp className="size-7" /></Link>
           <Link to='/'><IoHomeSharp className="size-7"/></Link>
-          <Link to='/msg'><MdMessage className="size-7"/></Link>
+          <Link to='/usermsg'><MdMessage className="size-7"/></Link>
           
         </div>
 
