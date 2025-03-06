@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const userRoute = require('./Routes/user.route');
 const captainRoute = require('./Routes/captain.route');
 const messageRoute = require('./Routes/message.route');
+const chaptainMessageRoute = require('./Routes/captainmessage.route')
 
 
 
@@ -32,5 +33,6 @@ app.get('/', (req, res) => {
 app.use('/users', userRoute);
 app.use('/captains', captainRoute);
 app.use('/api', messageRoute);
+app.use('/api/captain', chaptainMessageRoute);
 
 module.exports = app;
