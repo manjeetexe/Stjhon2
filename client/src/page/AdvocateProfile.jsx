@@ -81,12 +81,12 @@ const Home = () => {
         </div>
 
         <div className="flex flex-col gap-14">
-          <Link to='/usersearch'><RiGlobalFill className="size-7"/></Link>
-          <Link to='/userprofile'><IoPerson className="size-7"/></Link>
-          <Link to='/home'><IoChatbubbleEllipsesSharp className="size-7" /></Link>
-          <Link to='/'><IoHomeSharp className="size-7"/></Link>
-          <Link to='/usermsg'><MdMessage className="size-7"/></Link>
-          
+            <Link to='/advocatesearch'><RiGlobalFill className="size-7"/></Link>
+            <Link to='/advocateprofile'><IoPerson className="size-7"/></Link>
+            <Link to='/home'><IoChatbubbleEllipsesSharp className="size-7" /></Link>
+            <Link to='/'><IoHomeSharp className="size-7"/></Link>
+             <Link to='/advocatemsg'><MdMessage className="size-7"/></Link>
+    
         </div>
 
         <div className="flex flex-col gap-5">
