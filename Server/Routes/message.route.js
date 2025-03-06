@@ -9,7 +9,7 @@ router.get('/usermsg',authMiddleware.authUser ,messageController.getcaptainsforS
 
 router.get('/:captainChatid',authMiddleware.authUser ,messageController.getcaptainsMessages)
 
-router.get('/send/:captainChatid',authMiddleware.authUser ,messageController.sendCaptainMsg)
+router.post('/send/:captainChatid',authMiddleware.authUser ,messageController.sendCaptainMsg)
 
 
 

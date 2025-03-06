@@ -9,7 +9,8 @@ import { MdMessage } from "react-icons/md";
 import { RiGlobalFill } from "react-icons/ri";
 import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import Siderbar from "../Components/Siderbar";
+import Sidebar from "../Components/Siderbar";
+
 
 
 
@@ -18,109 +19,65 @@ const Home = () => {
   const [middleWidth, setMiddleWidth] = useState(600);
   const [isResizing, setIsResizing] = useState(false);
   const [resizerType, setResizerType] = useState(null);
+  
 
   const minSidebarWidth = 100;
   const maxSidebarWidth = 120;
   const minMiddleWidth = 650;
   const maxMiddleWidth = 950;
 
-  const [messages, setMessages] = useState([]);
+  
   const [input, setInput] = useState("");
   const chatRef = useRef(null);
 
-  const sendMessage = async () => {
-    if (input.trim() === "") return;
+
+  const [selectedUser, setSelectedUser] = useState(null); // Store selected user
+  const [messages, setMessages] = useState([]); // Store messages
+
+  // Fetch messages when a user is selected
+  const fetchMessages = async (captainChatId) => {
+    setSelectedUser(captainChatId); // Set selected captain
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/${captainChatId}`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+
+      const result = await response.json();
+      console.log(result)
+      setMessages(result); // Store messages in state
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
   
-    // Add user message to chat immediately
-    const newMessage = { id: messages.length + 1, text: input, sender: "user" };
-    setMessages([...messages, newMessage]);
-    setInput("");
+
+  const sendMessage = async () => {
+    if (!input.trim() || !selectedUser) return;
   
     try {
-      // Send user message to backend
-      const response = await fetch("http://localhost:8000/ask", {
+      const response = await fetch(`http://localhost:4000/api/send/${selectedUser}`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: input }),
+        body: JSON.stringify({ text: input }),
       });
-    
-      console.log("Response Status:", response.status);
-    
-      if (!response.ok) {
-        throw new Error(`Server Error: ${response.status}`);
+  
+      if (response.ok) {
+        const newMessage = await response.json();
+        setMessages([...messages, newMessage]); // Append new message
+        setInput("");
       }
-    
-      const data = await response.json();
-      console.log("Response Data:", data);
-    
-      if (!data.response) {
-        throw new Error("Invalid response from server.");
-      }
-    
-      let botReply = (
-        <div>
-          {/* If response is a string, just display it */}
-          {typeof data.response === "string" ? (
-            <p className="text-lg font-semibold">{data.response}</p>
-          ) : (
-            // If response is an object, display structured content
-            <div>
-              {data.response.context && (
-                <div>
-                  <h1 className="text-xl font-bold text-blue-600">📝 Context:</h1>
-                  <p className="text-lg">{data.response.context}</p>
-                </div>
-              )}
-    
-              {data.response.relevant_laws?.length > 0 && (
-                <div>
-                  <h1 className="text-xl font-bold text-green-600">📜 Relevant Laws:</h1>
-                  <ul className="list-disc pl-5">
-                    {data.response.relevant_laws.map((law, index) => (
-                      <li key={index} className="text-lg">{law}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-    
-              {data.response.step_by_step_guidance?.length > 0 && (
-                <div>
-                  <h1 className="text-xl font-bold text-purple-600">📌 Step-by-Step Guidance:</h1>
-                  <ul className="list-decimal pl-5">
-                    {data.response.step_by_step_guidance.map((step, index) => (
-                      <li key={index} className="text-lg font-medium mt-2">Step {index + 1}: {step}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-    
-              {data.response.final_advice && (
-                <div>
-                  <h1 className="text-xl font-bold text-red-600">💡 Final Advice:</h1>
-                  <p className="text-lg">{data.response.final_advice}</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      );
-    
-      // Add bot response to chat
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 2, text: botReply, sender: "bot" },
-      ]);
     } catch (error) {
-      console.error("Error sending message:", error.message);
-    
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 2, text: <p className="text-red-600">⚠️ Error connecting to server.</p>, sender: "bot" },
-      ]);
+      console.error("Error sending message:", error);
     }
   };
+
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -199,16 +156,7 @@ const Home = () => {
       {/* Middle Section */}
       <div style={{ width: middleWidth }} className="h-screen py-6  bg-gray-100">
 
-       <Siderbar />
-
-        
-
-
-
-
-
-
-
+      <Sidebar onUserSelect={fetchMessages} />
       </div>
 
       {/* Resizer (Middle Section -> Main Section) */}
@@ -231,18 +179,20 @@ const Home = () => {
 
       {/* Chat Messages */}
       <div ref={chatRef} className="flex flex-col gap-2 flex-grow overflow-y-auto px-20 p-4">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`p-3 max-w-[75%] text-white text-sm shadow-md backdrop-blur-lg ${
-              msg.sender === "user"
-                ? "bg-black self-end rounded-2xl rounded-br-2xl rounded-bl-2xl"
-                : "bg-black self-start rounded-2xl rounded-bl-2xl rounded-br-2xl"
-            }`}
-          >
-            {msg.text}
+        <div className="w-2/3 px-5">
+          <h1 className="py-3 text-xl font-semibold">Chat</h1>
+          <div className="h-[400px] overflow-y-auto border p-3">
+            {messages.length > 0 ? (
+              messages.map((msg, index) => (
+                <div key={index} className={`py-1 ${msg.sender === selectedUser ? "text-left" : "text-right"}`}>
+                  <p className="px-3 py-2 rounded-lg inline-block bg-gray-200">{msg.message}</p>
+                </div>
+              ))
+            ) : (
+              <p>No messages yet...</p>
+            )}
           </div>
-        ))}
+        </div>
       </div>
 
       {/* Input Section */}
