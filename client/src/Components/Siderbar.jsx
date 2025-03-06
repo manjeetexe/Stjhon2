@@ -22,8 +22,8 @@ const Sidebar = ({ onUserSelect }) => {
   }, []);
 
   return (
-    <div className="w-1/3 border-r">
-      <h1 className="px-5 pb-6 border-b">Captains</h1>
+    <div className=" ">
+      <h1 className="px-5 pb-6 border-b">Advocates</h1>
       <div>
         {data.length > 0 ? (
           data.map((user) => (

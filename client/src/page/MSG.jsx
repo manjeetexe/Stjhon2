@@ -178,22 +178,31 @@ const Home = () => {
       </div>
 
       {/* Chat Messages */}
-      <div ref={chatRef} className="flex flex-col gap-2 flex-grow overflow-y-auto px-20 p-4">
-        <div className="w-2/3 px-5">
-          <h1 className="py-3 text-xl font-semibold">Chat</h1>
-          <div className="h-[400px] overflow-y-auto border p-3">
+      <div ref={chatRef} className="flex flex-col flex-grow overflow-y-auto px-16 ">
+        <div className=" px-5">
+          
+          <div className="h-full overflow-y-auto border p-3 bg-white rounded-lg shadow-md">
             {messages.length > 0 ? (
               messages.map((msg, index) => (
-                <div key={index} className={`py-1 ${msg.sender === selectedUser ? "text-left" : "text-right"}`}>
-                  <p className="px-3 py-2 rounded-lg inline-block bg-gray-200">{msg.message}</p>
+                <div
+                  key={index}
+                  className={`flex my-2 ${msg.sender === selectedUser ? "justify-start" : "justify-end"}`}
+                >
+                  <div
+                    className={`max-w-xs px-4 py-2 rounded-lg shadow-md ${
+                      msg.sender === selectedUser ? "bg-gray-200 text-black" : "bg-black text-white"
+                    }`}
+                  >
+                    <p className="text-sm">{msg.message}</p>
+                  </div>
                 </div>
               ))
             ) : (
-              <p>No messages yet...</p>
+              <p className="text-gray-500 text-center">No messages yet...</p>
             )}
           </div>
         </div>
-      </div>
+</div>
 
       {/* Input Section */}
       <div className="flex items-center p-4 px-20 bg-gray-100 shadow-md sticky bottom-0">
