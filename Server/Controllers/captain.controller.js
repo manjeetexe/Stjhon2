@@ -12,7 +12,9 @@ module.exports.regesterCaptain = async function (req, res, next) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { fullname, email, password, vehicle } = req.body;
+        const { fullname, email, password, } = req.body;
+
+        
 
         // Check if the captain already exists
         const isCaptainAlreadyExist = await captainModel.findOne({ email: email });
@@ -29,10 +31,7 @@ module.exports.regesterCaptain = async function (req, res, next) {
             lastname: fullname.lastname,
             email,
             password: hashPassword,
-            color: vehicle.color,
-            plate: vehicle.plate,
-            capacity: vehicle.capacity,
-            vehicleType: vehicle.vehicleType
+            
         });
 
         // Generate JWT token for the captain

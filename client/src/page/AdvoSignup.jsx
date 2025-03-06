@@ -23,7 +23,7 @@ const Signup = () => {
       email,
       password,
     };
-
+    console.log(userData);
     try {
       const response = await fetch("http://localhost:4000/captains/register", {
         method: "POST",

@@ -15,7 +15,10 @@ const messageRoute = require('./Routes/message.route');
 
 
 connectToDB();
-app.use(cors()); 
+app.use(cors({
+  origin: "http://localhost:5173", // Replace with frontend URL
+  credentials: true,  // ✅ Allow cookies
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());

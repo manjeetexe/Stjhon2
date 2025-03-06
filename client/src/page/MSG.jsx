@@ -9,6 +9,7 @@ import { MdMessage } from "react-icons/md";
 import { RiGlobalFill } from "react-icons/ri";
 import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Siderbar from "../Components/Siderbar";
 
 
 
@@ -196,24 +197,11 @@ const Home = () => {
       ></div>
 
       {/* Middle Section */}
-      <div style={{ width: middleWidth }} className="h-screen py-6 px-5 bg-gray-100">
+      <div style={{ width: middleWidth }} className="h-screen py-6  bg-gray-100">
 
-        <h1 className="text-3xl">Chat</h1>
+       <Siderbar />
 
-        <button className="text-white bg-black text-lg flex w-full mt-10 justify-center items-center rounded-lg  py-2 px-10 ">
-          <h1>New Chat</h1>
-        </button>
-
-
-        <button className="text-white bg-black text-lg flex w-full mt-2 justify-center items-center rounded-lg  py-2 px-10 ">
-          <h1>Connect to  Advocate</h1>
-        </button>
-
-        <h1 className="text-xl mt-10">Messages</h1>
-
-        <div className="w-full mt-10 h-90 rounded-2xl bg-white">
-
-        </div>
+        
 
 
 

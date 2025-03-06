@@ -7,7 +7,7 @@ module.exports.getcaptainsforSidebar = async function (req, res, next) {
     try {
         
 
-        const filterCaptains = await captainModel.find().select('password')
+        const filterCaptains = await captainModel.findOne()
         res.status(200).json(filterCaptains)
 
 
