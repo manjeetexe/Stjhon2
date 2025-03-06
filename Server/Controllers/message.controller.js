@@ -46,14 +46,32 @@ module.exports.getcaptainsMessages = async function (req, res, next) {
 
 module.exports.sendCaptainMsg = async function (req, res, next) {
     try {
-        
+        const {text ,image} = req.body;
         const { captainChatid } = req.params;
         const userID = req.user._id;
 
-        
+        let imgUrl;
+        if(image){
+            const UploadResponse = await cloudinary.upload(image);
+            imgUrl = UploadResponse.secure_url;
+        }
+
+        const newMesaage = new Mesaage({
+            senderId : userID,
+            receiverId : captainChatid,
+            text,
+            image: imgUrl
+        })
+
+        await newMesaage.save();
+
+        // todo; sokectio code
+
+
+        res.status(201).json(newMesaage);
         
     } catch (err) {
         console.error('Error fetching messages:', err);
-        res.status(500).json({ error: 'An unexpected error occurred, please try again later' });
+        res.status(500).json({ error: 'Internal Server error' });
     }
 };
