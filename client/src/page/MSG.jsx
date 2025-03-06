@@ -178,30 +178,29 @@ const Home = () => {
       </div>
 
       {/* Chat Messages */}
-      <div ref={chatRef} className="flex flex-col flex-grow overflow-y-auto px-16 ">
-        <div className=" px-5">
-          
-          <div className="h-full overflow-y-auto border p-3 bg-white rounded-lg shadow-md">
-            {messages.length > 0 ? (
-              messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex my-2 ${msg.sender === selectedUser ? "justify-start" : "justify-end"}`}
-                >
-                  <div
-                    className={`max-w-xs px-4 py-2 rounded-lg shadow-md ${
-                      msg.sender === selectedUser ? "bg-gray-200 text-black" : "bg-black text-white"
-                    }`}
-                  >
-                    <p className="text-sm">{msg.message}</p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500 text-center">No messages yet...</p>
-            )}
+      <div ref={chatRef} className="flex flex-col flex-grow overflow-y-auto px-16">
+  <div className="px-5">
+    <div className="h-[400px] overflow-y-auto border p-3 bg-white rounded-lg shadow-md">
+      {messages.length > 0 ? (
+        messages.map((msg, index) => (
+          <div
+            key={msg._id} // Use `_id` instead of `index` for better performance
+            className={`flex my-2 ${msg.senderId === selectedUser ? "justify-start" : "justify-end"}`}
+          >
+            <div
+              className={`max-w-xs px-4 py-2 rounded-lg shadow-md ${
+                msg.senderId === selectedUser ? "bg-gray-200 text-black" : "bg-black text-white"
+              }`}
+            >
+              <p className="text-sm">{msg.text}</p> {/* Use msg.text instead of msg.message */}
+            </div>
           </div>
-        </div>
+        ))
+      ) : (
+        <p className="text-gray-500 text-center">No messages yet...</p>
+      )}
+    </div>
+  </div>
 </div>
 
       {/* Input Section */}
