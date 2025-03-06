@@ -27,5 +27,6 @@ app.get('/', (req, res) => {
 
 app.use('/users', userRoute);
 app.use('/captains', captainRoute);
+app.use('/api', messageRoute);
 
 module.exports = app;
