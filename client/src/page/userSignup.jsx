@@ -35,6 +35,7 @@ const Signup = () => {
       });
 
       const data = await response.json();
+      console.log(data)
 
       if (response.ok) {
         setSuccess("User registered successfully!");

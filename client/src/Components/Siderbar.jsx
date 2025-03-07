@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Sidebar = ({ onUserSelect }) => {
   const [data, setData] = useState([]); // Store captains list
@@ -6,9 +7,11 @@ const Sidebar = ({ onUserSelect }) => {
   useEffect(() => {
     const fetchCaptains = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/usermsg", {
-          method: "GET",
-          credentials: "include",
+        const response = await axios.get("http://localhost:4000/api/usermsg", {
+          withCredentials: true, // Equivalent to `credentials: "include"`
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
         const result = await response.json();
