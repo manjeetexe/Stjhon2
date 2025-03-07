@@ -11,17 +11,16 @@ const Login = () => {
     e.preventDefault();
     setError(null);
 
+    const captain = {
+      email: email,
+      password
+    }
+    
     try {
-      const response = await fetch("http://localhost:4000/captains/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
+      const response = await axios.post(`http://localhost:4000/captains/login`, captain)
+      console.log(response)
       const data = await response.json();
+      console.log(data)
 
       if (response.ok) {
         // Store token or user data in localStorage/sessionStorage

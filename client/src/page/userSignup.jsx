@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -25,33 +26,30 @@ const Signup = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:4000/users/register", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
+      const response = await axios.post("http://localhost:4000/users/register", userData, {
+        withCredentials: true, // Ensures cookies are included if needed
+        headers: { "Content-Type": "application/json" },
+        
       });
-
-      const data = await response.json();
-      console.log(data)
-
-      if (response.ok) {
-        setSuccess("User registered successfully!");
-        setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds
-      } else {
-        setError(data.message || "Something went wrong");
+    
+      console.log(response.data); // Logging response data
+    
+      // Store token in localStorage
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
       }
+    
+      setSuccess("User registered successfully!");
+      setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds
     } catch (err) {
-      setError("Failed to connect to the server");
+      setError(err.response?.data?.message || "Failed to connect to the server");
     }
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-black text-white">
       <div className="w-full max-w-md p-8 border border-white rounded-lg">
-        <h2 className="text-3xl font-semibold text-center mb-6"> User Sign Up</h2>
+        <h2 className="text-3xl font-semibold text-center mb-6">User Sign Up</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"

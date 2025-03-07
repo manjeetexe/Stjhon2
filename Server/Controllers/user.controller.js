@@ -11,17 +11,20 @@ module.exports.regesterUser = async function (req, res, next) {
             return res.status(400).json({ errors: errors.array() });
         }
 
+        
+
         const { fullname, email, password } = req.body;
 
-        const isUserAlreadyExist = await userModel.findOne({ email: email, })
-        if (isUserAlreadyExist) {
-            return res.status(400).json({ error: 'User with this email already exists' });
-        }
+        console.log(req.body)
 
+        
+        
         // Check for missing fields
-        if (!fullname || !fullname.firstname || !email || !password) {
+        if ( !fullname.firstname || !email || !password) {
             return res.status(400).json({ error: 'All fields are required' });
         }
+
+        console.log('h1')
 
         // Check if email already exists
         const existingUser = await userModel.findOne({ email });
@@ -45,8 +48,17 @@ module.exports.regesterUser = async function (req, res, next) {
         // Generate a token
         const token = user.generateAuthToken();
 
-        res.cookie('token', token);
+
+
+        res.cookie("token", token, {
+            httpOnly: true,   // Keeps cookie secure from frontend JS
+            secure: false,    // Change to true in production (requires HTTPS)
+            sameSite: "None", // Allows cross-origin requests
+            path: "/",        // Ensures cookie is available site-wide
+            maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
+          });
         // Respond with success
+
         res.status(200).json({ token, user });
     } catch (error) {
         console.error('Error registering user:', error);
@@ -61,6 +73,7 @@ module.exports.regesterUser = async function (req, res, next) {
     }
 };
 
+
 module.exports.loginUser = async function (req, res, next) {
     try {
         // Validate incoming request (await for asynchronous validation)
@@ -70,6 +83,7 @@ module.exports.loginUser = async function (req, res, next) {
         }
 
         const { email, password } = req.body;
+        console.log();
 
         
 
@@ -84,6 +98,7 @@ module.exports.loginUser = async function (req, res, next) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
+
         // Compare entered password with the stored password
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
@@ -92,9 +107,18 @@ module.exports.loginUser = async function (req, res, next) {
 
         // Generate JWT token
         const token = user.generateAuthToken();
+        
+        console.log(token);
 
-        res.cookie('token', token);
+        res.cookie("token", token, {
+            httpOnly: true,   // Keeps cookie secure from frontend JS
+            secure: false,    // Change to true in production (requires HTTPS)
+            sameSite: "None", // Allows cross-origin requests
+            path: "/",        // Ensures cookie is available site-wide
+            maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
+          });
 
+        
         // Send response with token and user details
         return res.status(200).json({ token, user });
     } catch (error) {

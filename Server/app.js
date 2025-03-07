@@ -7,6 +7,8 @@ const connectToDB = require('./Database/DB');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./Routes/user.route');
 const captainRoute = require('./Routes/captain.route');
+const messageRoute = require('./Routes/message.route');
+const chaptainMessageRoute = require('./Routes/captainmessage.route')
 
 
 
@@ -14,7 +16,10 @@ const captainRoute = require('./Routes/captain.route');
 
 
 connectToDB();
-app.use(cors()); 
+app.use(cors({
+  origin: "http://localhost:5173", // Replace with frontend URL
+  credentials: true,  // ✅ Allow cookies
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -27,5 +32,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', userRoute);
 app.use('/captains', captainRoute);
+app.use('/api', messageRoute);
+app.use('/api/captain', chaptainMessageRoute);
 
 module.exports = app;

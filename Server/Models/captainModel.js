@@ -29,41 +29,6 @@ const captainSchema = new mongoose.Schema({
     soketId:{
         type:String,
     },
-    status:{
-        type:String,
-        enum:['active','inactive'],
-        default:'active'
-    },
-    vehicle:{
-        color:{
-            type:String,
-            required:true,
-            minlength:[3,'color must be 3 character long']
-        },
-        plate:{
-            type:String,
-            required:true,
-            minlength:[3,'plate must be 3 character long']
-        },
-        capacity:{
-            type:Number,
-            required:true,
-            minlength:[1,'capacity must be atlest 1']
-        },
-        vehicleType:{
-            type: String,
-            required:true,
-            enum:['car','auto','motorcycle']
-        },
-        location:{
-            lat:{
-                type:Number,
-            },
-            lng:{
-                type:Number,
-            }
-        }
-    }
 });
 
 captainSchema.methods.generateAuthToken = function(){
