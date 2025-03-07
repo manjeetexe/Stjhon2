@@ -7,15 +7,19 @@ const Sidebar = ({ onUserSelect }) => {
   useEffect(() => {
     const fetchCaptains = async () => {
       try {
+        const token = localStorage.getItem("token"); // Get token from localStorage
+    
         const response = await axios.get("http://localhost:4000/api/usermsg", {
-          withCredentials: true, // Equivalent to `credentials: "include"`
+          withCredentials: true, // Include cookies if required
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Send token in headers
           },
         });
 
-        const result = await response.json();
-        setData(Array.isArray(result) ? result : []); // Ensure result is an array
+        console.log(response.data)
+    
+        setData(Array.isArray(response.data) ? response.data : []); // Ensure data is an array
       } catch (error) {
         console.error("Error fetching captains:", error);
       }

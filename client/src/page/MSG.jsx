@@ -10,6 +10,7 @@ import { RiGlobalFill } from "react-icons/ri";
 import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Sidebar from "../Components/Siderbar";
+import axios from "axios";
 
 
 
@@ -37,17 +38,20 @@ const Home = () => {
   // Fetch messages when a user is selected
   const fetchMessages = async (captainChatId) => {
     setSelectedUser(captainChatId); // Set selected captain
-
+    console.log(captainChatId)
     try {
-      const response = await fetch(`http://localhost:4000/api/${captainChatId}`, {
-        method: "GET",
-        credentials: "include",
+      const token = localStorage.getItem("token"); // Get token from localStorage
+  
+      const response = await axios.get(`http://localhost:4000/api/${captainChatId}`, {
+        withCredentials: true, // Include cookies if required
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Send token in headers
+        },
       });
-
-
-      const result = await response.json();
-      console.log(result)
-      setMessages(result); // Store messages in state
+  
+      console.log(response.data); // Log the response
+      setMessages(response.data); // Store messages in state
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
@@ -59,20 +63,22 @@ const Home = () => {
     if (!input.trim() || !selectedUser) return;
   
     try {
-      const response = await fetch(`http://localhost:4000/api/send/${selectedUser}`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: input }),
-      });
+      const token = localStorage.getItem("token"); // Get token from localStorage
   
-      if (response.ok) {
-        const newMessage = await response.json();
-        setMessages([...messages, newMessage]); // Append new message
-        setInput("");
-      }
+      const response = await axios.post(
+        `http://localhost:4000/api/send/${selectedUser}`,
+        { text: input }, // Request body
+        {
+          withCredentials: true, // Include cookies if needed
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Send token in headers
+          },
+        }
+      );
+  
+      setMessages([...messages, response.data]); // Append new message
+      setInput("");
     } catch (error) {
       console.error("Error sending message:", error);
     }

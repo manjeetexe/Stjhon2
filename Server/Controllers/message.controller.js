@@ -26,8 +26,7 @@ module.exports.getcaptainsMessages = async function (req, res, next) {
         const { captainChatid } = req.params;  
         const userID = req.user._id;           
 
-        console.log(captainChatid)
-        console.log(userID)
+        
 
         // Convert captainChatid to ObjectId
         const captainChatObjectId = new mongoose.Types.ObjectId(captainChatid);
@@ -58,6 +57,10 @@ module.exports.sendCaptainMsg = async function (req, res) {
         const { captainChatid } = req.params;
         const userID = req.user._id;
 
+        
+        console.log(text)
+        console.log(captainChatid)
+        console.log(userID)
         
 
         if (!text.trim()) {
