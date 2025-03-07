@@ -10,6 +10,8 @@ import { RiGlobalFill } from "react-icons/ri";
 import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import AdvocateSidebar from "../Components/advocateSidebar";
+import axios from "axios";
+
 
 
 
@@ -35,19 +37,24 @@ const Home = () => {
   const [messages, setMessages] = useState([]); // Store messages
 
   // Fetch messages when a user is selected
-  const fetchMessages = async (userChatId ) => {
-    setSelectedUser(userChatId ); // Set selected captain
-    console.log(userChatId)
+  const fetchMessages = async (userChatId) => {
+    setSelectedUser(userChatId); // Set selected user
+    console.log(userChatId);
+  
     try {
-      const response = await fetch(`http://localhost:4000/api/${userChatId}`, {
-        method: "GET",
-        credentials: "include",
+      const token = localStorage.getItem("token"); // Get token from localStorage
+      console.log(token)
+      const response = await axios.get(`http://localhost:4000/api/${userChatId}`, {
+        withCredentials: true, // Include cookies if required
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Send token in headers
+        },
       });
+  
 
-
-      const result = await response.json();
-      console.log(result)
-      setMessages(result); // Store messages in state
+      console.log(response.data); // Log the response
+      setMessages(response.data); // Store messages in state
     } catch (error) {
       console.error("Error fetching messages:", error);
     }

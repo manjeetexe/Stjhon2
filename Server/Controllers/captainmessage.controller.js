@@ -6,7 +6,7 @@ module.exports.getuserforSidebar = async function (req, res, next) {
 
     try {
         
-        console.log('hi')
+        
         const filterUsers = await userModel.find()
         res.status(200).json(filterUsers)
 
@@ -23,7 +23,7 @@ module.exports.getuserforSidebar = async function (req, res, next) {
 module.exports.getuserMessages = async function (req, res, next) {
     try {
         const { userChatId } = req.params;  
-        const captainID = req.captain; 
+        const captainID = req.captain._id; 
         
         console.log(userChatId)
         console.log(captainID)
