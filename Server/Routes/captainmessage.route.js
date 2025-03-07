@@ -7,7 +7,7 @@ const messageCaptainController = require('./../Controllers/captainmessage.contro
 
 router.get('/sidebar/captainmsg' ,messageCaptainController.getuserforSidebar)
 
-router.get('captain/:userChatId',authMiddleware.authCaptain ,messageCaptainController.getuserMessages)
+router.get('/:userChatId' ,messageCaptainController.getuserMessages)
 
 router.post('/send/:userChatId',authMiddleware.authCaptain ,messageCaptainController.senduserMsg)
 

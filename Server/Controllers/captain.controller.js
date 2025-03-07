@@ -82,7 +82,7 @@ module.exports.loginCaptain = async function (req, res, next) {
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-
+    
     // Generate JWT token
     const token = jwt.sign({ _id: captain._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",

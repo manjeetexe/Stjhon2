@@ -22,17 +22,18 @@ module.exports.getuserforSidebar = async function (req, res, next) {
 
 module.exports.getuserMessages = async function (req, res, next) {
     try {
-        const { userChatId } = req.params;  
-        const captainID = req.captain._id; 
+        const { userChatId } = req.params;
+        const captainID = req.query.advocateId;
         
-        console.log(userChatId)
-        console.log(captainID)
+        console.log("User Chat ID:", userChatId);
+        console.log("Captain ID from authMiddleware:", captainID);
 
-    
-        // Convert captainChatid to ObjectId
+        if (!captainID) {
+            return res.status(401).json({ error: "Captain authentication failed. Please login again." });
+        }
+
         const userChatObjectId = new mongoose.Types.ObjectId(userChatId);
 
-        // Query with ObjectId comparison
         const messages = await captainMessageModel.find({
             $or: [
                 { senderId: captainID, receiverId: userChatObjectId },
@@ -43,7 +44,7 @@ module.exports.getuserMessages = async function (req, res, next) {
         res.status(200).json(messages);
     } catch (err) {
         console.error("Error fetching messages:", err);
-        res.status(500).json({ error: "An unexpected error occurred, please try again later" });
+        res.status(500).json({ error: err.message });
     }
 };
 

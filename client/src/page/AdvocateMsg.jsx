@@ -11,7 +11,7 @@ import { IoHomeSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import AdvocateSidebar from "../Components/advocateSidebar";
 import axios from "axios";
-
+import {jwtDecode} from "jwt-decode"; 
 
 
 
@@ -38,27 +38,31 @@ const Home = () => {
 
   // Fetch messages when a user is selected
   const fetchMessages = async (userChatId) => {
-    setSelectedUser(userChatId); // Set selected user
-    console.log(userChatId);
-  
-    try {
-      const token = localStorage.getItem("token"); // Get token from localStorage
-      console.log(token)
-      const response = await axios.get(`http://localhost:4000/api/${userChatId}`, {
-        withCredentials: true, // Include cookies if required
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Send token in headers
-        },
-      });
-  
+    setSelectedUser(userChatId);
+    console.log("Fetching messages for:", userChatId);
 
-      console.log(response.data); // Log the response
-      setMessages(response.data); // Store messages in state
+    try {
+        const token = localStorage.getItem("token"); // Get token from localStorage
+        if (!token) {
+            console.error("No token found in localStorage");
+            return;
+        }
+
+        // Decode the token
+        const decodedToken = jwtDecode(token);
+        console.log("Decoded Token:", decodedToken);
+
+        const advocateId = decodedToken._id; // Extract user ID from the token
+
+        // Send userId as a query parameter
+        const response = await axios.get(`http://localhost:4000/api/${userChatId}?advocateId=${advocateId}`);
+
+        console.log("Messages:", response.data);
+        setMessages(response.data);
     } catch (error) {
-      console.error("Error fetching messages:", error);
+        console.error("Error fetching messages:", error.response?.data || error.message);
     }
-  };
+};
 
   
 

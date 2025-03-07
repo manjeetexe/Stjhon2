@@ -36,33 +36,22 @@ module.exports.authUser = async (req, res, next) => {
 }
 
 module.exports.authCaptain = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
-
-    
-
-    if(!token) {
-        return res.status(401).json({ error: 'Not authorized' });
-    }
-
-    const blackListed = await blackListTokenModel.findOne({ token: token });
-
-    if(blackListed) {
-        return res.status(401).json({ error: ' Unanthorized' });
-    }
-
     try {
-        // Decode and verify the JWT using the secret key
-        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Use jwt.verify to verify the token
+        const token = req.headers.authorization?.split(" ")[1];  // Extract token from header
+        if (!token) {
+            return res.status(401).json({ error: "No token provided. Unauthorized access." });
+        }
         
-    
-        // Find the user by ID from the decoded token
-        const captain = await captainModel.findById(decoded._id);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);  // Verify token
+        req.captain = await captainModel.findById(decoded.id);  // Get captain from DB
 
-        req.captain = captain;
-    
-        return next();
+        if (!req.captain) {
+            return res.status(401).json({ error: "Captain not found. Invalid token." });
+        }
 
-    } catch (err) {
-        return res.status(401).json({ error: 'Not authorized' });
+        next();
+    } catch (error) {
+        console.error("Auth Middleware Error:", error);
+        res.status(401).json({ error: "Invalid or expired token" });
     }
-}
+};
