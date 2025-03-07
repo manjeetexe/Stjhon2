@@ -39,7 +39,7 @@ const Home = () => {
     setSelectedUser(userChatId ); // Set selected captain
     console.log(userChatId)
     try {
-      const response = await fetch(`http://localhost:4000/api/captain/${userChatId}`, {
+      const response = await fetch(`http://localhost:4000/api/${userChatId}`, {
         method: "GET",
         credentials: "include",
       });

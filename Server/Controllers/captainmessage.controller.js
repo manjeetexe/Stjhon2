@@ -6,7 +6,7 @@ module.exports.getuserforSidebar = async function (req, res, next) {
 
     try {
         
-
+        console.log('hi')
         const filterUsers = await userModel.find()
         res.status(200).json(filterUsers)
 

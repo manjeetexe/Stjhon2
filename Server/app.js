@@ -33,6 +33,6 @@ app.get('/', (req, res) => {
 app.use('/users', userRoute);
 app.use('/captains', captainRoute);
 app.use('/api', messageRoute);
-app.use('/api/captain', chaptainMessageRoute);
+app.use('/api', chaptainMessageRoute);
 
 module.exports = app;

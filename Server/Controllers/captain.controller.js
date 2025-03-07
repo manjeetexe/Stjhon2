@@ -66,6 +66,8 @@ module.exports.loginCaptain = async function (req, res, next) {
 
         const { email, password } = req.body;
 
+        console.log(req.body)
+
         
 
         

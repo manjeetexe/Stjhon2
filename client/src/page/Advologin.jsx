@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,27 +11,25 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
-
+  
     const captain = {
-      email: email,
-      password
-    }
-    
+      email,
+      password,
+    };
+  
     try {
-      const response = await axios.post(`http://localhost:4000/captains/login`, captain)
-      console.log(response)
-      const data = await response.json();
-      console.log(data)
-
-      if (response.ok) {
-        // Store token or user data in localStorage/sessionStorage
-        localStorage.setItem("token", data.token);
+      const response = await axios.post("http://localhost:4000/captains/login", captain);
+  
+      console.log(response); // Debugging: Log response data
+  
+      if (response.status === 200) { // Check if login is successful
+        localStorage.setItem("token", response.data.token);
         navigate("/"); // Redirect to home page after successful login
       } else {
-        setError(data.message || "Invalid email or password");
+        setError(response.data.message || "Invalid email or password");
       }
     } catch (err) {
-      setError("Failed to connect to the server");
+      setError(err.response?.data?.message || "Failed to connect to the server");
     }
   };
 
